@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { hexToOklch } from './oklch';
-import { simulateVision, type VisionType } from './vision';
+import { displayColor, simulateVision, type VisionType } from './vision';
 
 const types: VisionType[] = ['protanopia', 'deuteranopia', 'tritanopia', 'achromatopsia'];
 
@@ -23,6 +23,16 @@ function hueDistance(first: string, second: string): number {
   const [, a2, b2] = toLab(second);
   return Math.hypot(a1 - a2, b1 - b2);
 }
+
+describe('displayColor', () => {
+  it('returns the exact color in typical mode', () => {
+    expect(displayColor('#e11d48', 'typical')).toBe('#e11d48');
+  });
+
+  it('returns the simulated color in other modes', () => {
+    expect(displayColor('#e11d48', 'deuteranopia')).toBe(simulateVision('#e11d48', 'deuteranopia'));
+  });
+});
 
 describe('simulateVision', () => {
   it.each(types)('leaves black, white, and gray unchanged for %s', (type) => {

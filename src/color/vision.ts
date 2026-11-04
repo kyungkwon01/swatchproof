@@ -1,6 +1,15 @@
 import { hexToRgb, linearToSrgb, rgbToHex, srgbToLinear } from './oklch';
 
 export type VisionType = 'protanopia' | 'deuteranopia' | 'tritanopia' | 'achromatopsia';
+export type VisionMode = 'typical' | VisionType;
+
+export const VISION_MODES: { id: VisionMode; label: string; description: string }[] = [
+  { id: 'typical', label: 'Typical', description: 'Colors as entered.' },
+  { id: 'protanopia', label: 'Protanopia', description: 'No red cones. Reds look darker and merge with greens.' },
+  { id: 'deuteranopia', label: 'Deuteranopia', description: 'No green cones. Reds and greens are hard to tell apart.' },
+  { id: 'tritanopia', label: 'Tritanopia', description: 'No blue cones. Blues and greens are hard to tell apart.' },
+  { id: 'achromatopsia', label: 'Achromatopsia', description: 'No color vision. Only lightness differences remain.' },
+];
 
 type Row = [number, number, number];
 type Matrix = [Row, Row, Row];
@@ -43,4 +52,9 @@ export function simulateVision(hex: string, type: VisionType): string {
   }) as Row;
 
   return rgbToHex(simulated);
+}
+
+/** Returns the color to paint on screen for a mode. */
+export function displayColor(hex: string, mode: VisionMode): string {
+  return mode === 'typical' ? hex : simulateVision(hex, mode);
 }

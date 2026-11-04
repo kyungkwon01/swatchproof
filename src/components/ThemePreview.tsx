@@ -1,6 +1,7 @@
 import { useId, type CSSProperties } from 'react';
 import { contrastRatio, formatRatio, wcagLevel, type TextSize } from '../color/contrast';
 import type { ThemeTokens } from '../color/palette';
+import { displayColor, type VisionMode } from '../color/vision';
 
 interface Check {
   label: string;
@@ -20,18 +21,25 @@ function checksFor(tokens: ThemeTokens): Check[] {
   ];
 }
 
-function SampleTheme({ title, tokens }: { title: string; tokens: ThemeTokens }) {
+interface SampleThemeProps {
+  title: string;
+  tokens: ThemeTokens;
+  vision: VisionMode;
+}
+
+function SampleTheme({ title, tokens, vision }: SampleThemeProps) {
   const emailId = useId();
+  const shown = (hex: string) => displayColor(hex, vision);
   const style = {
-    '--p-background': tokens.background,
-    '--p-surface': tokens.surface,
-    '--p-text': tokens.text,
-    '--p-muted': tokens.mutedText,
-    '--p-border': tokens.border,
-    '--p-field-border': tokens.fieldBorder,
-    '--p-primary': tokens.primary,
-    '--p-on-primary': tokens.onPrimary,
-    '--p-link': tokens.link,
+    '--p-background': shown(tokens.background),
+    '--p-surface': shown(tokens.surface),
+    '--p-text': shown(tokens.text),
+    '--p-muted': shown(tokens.mutedText),
+    '--p-border': shown(tokens.border),
+    '--p-field-border': shown(tokens.fieldBorder),
+    '--p-primary': shown(tokens.primary),
+    '--p-on-primary': shown(tokens.onPrimary),
+    '--p-link': shown(tokens.link),
   } as CSSProperties;
 
   return (
@@ -83,7 +91,13 @@ function SampleTheme({ title, tokens }: { title: string; tokens: ThemeTokens }) 
   );
 }
 
-export function ThemePreview({ light, dark }: { light: ThemeTokens; dark: ThemeTokens }) {
+interface ThemePreviewProps {
+  light: ThemeTokens;
+  dark: ThemeTokens;
+  vision: VisionMode;
+}
+
+export function ThemePreview({ light, dark, vision }: ThemePreviewProps) {
   return (
     <section className="panel" id="preview" aria-labelledby="preview-heading">
       <div className="panel__header">
@@ -91,8 +105,8 @@ export function ThemePreview({ light, dark }: { light: ThemeTokens; dark: ThemeT
         <p>Swatchproof picks the steps that stay readable in each mode.</p>
       </div>
       <div className="themes">
-        <SampleTheme title="Light mode" tokens={light} />
-        <SampleTheme title="Dark mode" tokens={dark} />
+        <SampleTheme title="Light mode" tokens={light} vision={vision} />
+        <SampleTheme title="Dark mode" tokens={dark} vision={vision} />
       </div>
     </section>
   );

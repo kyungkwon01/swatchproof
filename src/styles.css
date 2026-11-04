@@ -253,8 +253,33 @@ button {
   gap: 1.25rem;
 }
 
+.vision {
+  padding: 1rem 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.vision__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+
+.vision__title {
+  font-size: 1rem;
+}
+
+.vision__description {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
 .toggle {
   display: inline-flex;
+  flex-wrap: wrap;
   padding: 3px;
   border: 1px solid var(--field);
   border-radius: 8px;
