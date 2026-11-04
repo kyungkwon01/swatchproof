@@ -1,26 +1,29 @@
 import { mostReadable } from '../color/contrast';
 import type { Palette, Step, Swatch } from '../color/palette';
+import { displayColor, type VisionMode } from '../color/vision';
 
 interface ScaleProps {
   title: string;
   swatches: Swatch[];
   anchorStep?: Step;
+  vision: VisionMode;
   onCopy: (hex: string) => void;
 }
 
-function Scale({ title, swatches, anchorStep, onCopy }: ScaleProps) {
+function Scale({ title, swatches, anchorStep, vision, onCopy }: ScaleProps) {
   return (
     <div>
       <h3 className="scale__title">{title}</h3>
       <ul className="scale">
         {swatches.map(({ step, hex }) => {
           const isAnchor = step === anchorStep;
+          const shown = displayColor(hex, vision);
           return (
             <li key={step}>
               <button
                 type="button"
                 className="swatch"
-                style={{ background: hex, color: mostReadable(hex, ['#000000', '#ffffff']) }}
+                style={{ background: shown, color: mostReadable(shown, ['#000000', '#ffffff']) }}
                 aria-label={`Copy ${title} ${step}, ${hex}${isAnchor ? ', your color' : ''}`}
                 onClick={() => onCopy(hex)}
               >
@@ -41,10 +44,11 @@ function Scale({ title, swatches, anchorStep, onCopy }: ScaleProps) {
 interface PalettePanelProps {
   palette: Palette;
   name: string;
+  vision: VisionMode;
   onCopy: (hex: string) => void;
 }
 
-export function PalettePanel({ palette, name, onCopy }: PalettePanelProps) {
+export function PalettePanel({ palette, name, vision, onCopy }: PalettePanelProps) {
   return (
     <section className="panel" aria-labelledby="palette-heading">
       <div className="panel__header">
@@ -56,9 +60,10 @@ export function PalettePanel({ palette, name, onCopy }: PalettePanelProps) {
           title={name}
           swatches={palette.brand}
           anchorStep={palette.anchorStep}
+          vision={vision}
           onCopy={onCopy}
         />
-        <Scale title="neutral" swatches={palette.neutral} onCopy={onCopy} />
+        <Scale title="neutral" swatches={palette.neutral} vision={vision} onCopy={onCopy} />
       </div>
     </section>
   );

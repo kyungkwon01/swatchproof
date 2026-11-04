@@ -4,13 +4,17 @@ import { ContrastGrid } from './components/ContrastGrid';
 import { ExportPanel } from './components/ExportPanel';
 import { PalettePanel } from './components/PalettePanel';
 import { ThemePreview } from './components/ThemePreview';
+import { VisionReport } from './components/VisionReport';
+import { VisionSelect } from './components/VisionSelect';
 import { slugify } from './color/exportFormats';
 import { darkTokens, generatePalette, lightTokens } from './color/palette';
 import { parseSettings, toSearch } from './color/urlState';
+import type { VisionMode } from './color/vision';
 
 export function App() {
   const [settings, setSettings] = useState(() => parseSettings(window.location.search));
   const { hex, name } = settings;
+  const [vision, setVision] = useState<VisionMode>('typical');
   const [message, setMessage] = useState('');
   const messageTimer = useRef<number>(undefined);
 
@@ -65,12 +69,15 @@ export function App() {
           onNameChange={(next) => setSettings((current) => ({ ...current, name: next }))}
           onCopyLink={() => copy(window.location.origin + window.location.pathname + toSearch(settings), 'Link copied')}
         />
+        <VisionSelect mode={vision} onChange={setVision} />
         <PalettePanel
           palette={palette}
           name={slugify(name)}
+          vision={vision}
           onCopy={(value) => copy(value, `Copied ${value}`)}
         />
-        <ThemePreview light={light} dark={dark} />
+        <ThemePreview light={light} dark={dark} vision={vision} />
+        <VisionReport light={light} dark={dark} />
         <ContrastGrid swatches={palette.brand} name={slugify(name)} />
         <ExportPanel
           name={name}
