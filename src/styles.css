@@ -550,6 +550,56 @@ button {
   background: #f7e4e1;
 }
 
+/* Color blindness table */
+
+.report {
+  width: 100%;
+  min-width: 46rem;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+
+.report th,
+.report td {
+  padding: 0.4375rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.report thead th {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.report tbody th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.report tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.report__theme {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.report__value {
+  font-family: var(--mono);
+  white-space: nowrap;
+}
+
+.report__status {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 700;
+}
+
+.report__status--low {
+  color: var(--danger);
+}
+
 /* Export */
 
 .code {

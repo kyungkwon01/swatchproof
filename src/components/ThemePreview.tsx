@@ -1,25 +1,8 @@
 import { useId, type CSSProperties } from 'react';
-import { contrastRatio, formatRatio, wcagLevel, type TextSize } from '../color/contrast';
+import { contrastRatio, formatRatio, wcagLevel } from '../color/contrast';
 import type { ThemeTokens } from '../color/palette';
+import { themeChecks } from '../color/themeChecks';
 import { displayColor, type VisionMode } from '../color/vision';
-
-interface Check {
-  label: string;
-  foreground: string;
-  background: string;
-  size?: TextSize;
-}
-
-function checksFor(tokens: ThemeTokens): Check[] {
-  return [
-    { label: 'Body text', foreground: tokens.text, background: tokens.surface },
-    { label: 'Muted text', foreground: tokens.mutedText, background: tokens.surface },
-    { label: 'Link', foreground: tokens.link, background: tokens.surface },
-    { label: 'Button label', foreground: tokens.onPrimary, background: tokens.primary },
-    // WCAG 1.4.11 asks for 3:1 on control borders, the same bar as large text.
-    { label: 'Field border', foreground: tokens.fieldBorder, background: tokens.surface, size: 'large' },
-  ];
-}
 
 interface SampleThemeProps {
   title: string;
@@ -75,7 +58,7 @@ function SampleTheme({ title, tokens, vision }: SampleThemeProps) {
       </div>
 
       <ul className="checks">
-        {checksFor(tokens).map(({ label, foreground, background, size }) => {
+        {themeChecks(tokens).map(({ label, foreground, background, size }) => {
           const ratio = contrastRatio(foreground, background);
           const level = wcagLevel(ratio, size);
           return (

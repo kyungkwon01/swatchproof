@@ -4,6 +4,7 @@ import { ContrastGrid } from './components/ContrastGrid';
 import { ExportPanel } from './components/ExportPanel';
 import { PalettePanel } from './components/PalettePanel';
 import { ThemePreview } from './components/ThemePreview';
+import { VisionReport } from './components/VisionReport';
 import { VisionSelect } from './components/VisionSelect';
 import { slugify } from './color/exportFormats';
 import { darkTokens, generatePalette, lightTokens } from './color/palette';
@@ -76,6 +77,7 @@ export function App() {
           onCopy={(value) => copy(value, `Copied ${value}`)}
         />
         <ThemePreview light={light} dark={dark} vision={vision} />
+        <VisionReport light={light} dark={dark} />
         <ContrastGrid swatches={palette.brand} name={slugify(name)} />
         <ExportPanel
           name={name}
