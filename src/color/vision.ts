@@ -16,7 +16,9 @@ type Matrix = [Row, Row, Row];
 
 /**
  * Severity 1.0 matrices from Machado, Oliveira, and Fernandes (2009), "A Physiologically-based
- * Model for Simulation of Color Vision Deficiency". They apply to linear RGB, not sRGB values.
+ * Model for Simulation of Color Vision Deficiency". The paper's illustrations are reported to use
+ * gamma-encoded sRGB, but the matrices are applied here in linear RGB, because they model light.
+ * https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html
  */
 const MATRICES: Record<Exclude<VisionType, 'achromatopsia'>, Matrix> = {
   protanopia: [
