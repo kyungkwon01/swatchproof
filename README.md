@@ -2,7 +2,7 @@
 
 Turn one brand color into a full palette, and see which combinations people can read.
 
-**Live demo:** _add your link here_
+**Live demo:** https://kyungkwon01.github.io/swatchproof/
 
 ## Features
 
@@ -48,4 +48,4 @@ npm run build
 
 ## Deploy
 
-Connect the repo to Vercel or Netlify. Use `npm run build` as the build command and `dist` as the output folder.
+Every push to `main` runs the tests, builds the app, and deploys it to GitHub Pages through [GitHub Actions](.github/workflows/deploy.yml).
