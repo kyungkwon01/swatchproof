@@ -4,6 +4,8 @@ Turn one brand color into a full palette, and see which combinations people can 
 
 **Live demo:** https://kyungkwon01.github.io/swatchproof/
 
+![Swatchproof showing a rose palette, with light and dark previews](docs/screenshot.png)
+
 ## Features
 
 - **Palette generation:** creates a 10-step brand scale and a matching neutral scale from one color.
